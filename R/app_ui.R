@@ -13,9 +13,9 @@ app_ui <- function(request) {
       h1("cdmb"),
       tabsetPanel(
         tabPanel(title = "panel1",
-                 "module1"),
+                 "random_sequence"),
         tabPanel(title = "panel2",
-                 "module2")
+                 "plot_frequency")
       )
     )
   )
