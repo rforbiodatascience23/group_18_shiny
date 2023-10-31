@@ -1,32 +1,20 @@
 Package: cdmb
 Title: PKG_TITLE
 Version: 0.0.0.9000
-Authors@R: c(person(given = "Laia",
-           family = "Devesa Carretero",
-           role = c("cre", "aut"), # There must be a "cre", but there can only be one
-           email = "s222800@dtu.dk"), 
-    person(given = "Eirini",
-           family = "Giannakopoulou",
-           role = "aut",
-           email = "s230204@dtu.dk"),
-    person(given = "Minke",
-           family = "Oostermeijer",
-           role = "aut",
-           email = "s222854@dtu.dk"),
-    person(given = "Cátia",
-           family = "Baptista",
-           role = "aut",
-           email = "s213049@dtu.dk"),
-     person(given = "Nova",
-           family = "Forbes",
-           role = "aut",
-           email = "s222373@dtu.dk"))
+Authors@R: c(
+    person("Laia", "Devesa Carretero", , "s222800@dtu.dk", role = c("cre", "aut")),
+    person("Eirini", "Giannakopoulou", , "s230204@dtu.dk", role = "aut"),
+    person("Minke", "Oostermeijer", , "s222854@dtu.dk", role = "aut"),
+    person("Cátia", "Baptista", , "s213049@dtu.dk", role = "aut"),
+    person("Nova", "Forbes", , "s222373@dtu.dk", role = "aut")
+  )
 Description: PKG_DESC.
 License: MIT + file LICENSE
 Imports: 
+    centdog,
     config (>= 0.3.1),
+    ggplot2,
     golem (>= 0.4.1),
-    pkgload,
     shiny (>= 1.7.5)
 Encoding: UTF-8
 LazyData: true

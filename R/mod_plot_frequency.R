@@ -7,6 +7,8 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom ggplot2 theme
+#' @import centdog
 mod_plot_frequency_ui <- function(id){
   ns <- NS(id)
   tagList(shiny::sidebarLayout(
@@ -31,9 +33,20 @@ mod_plot_frequency_ui <- function(id){
 #' plot_frequency Server Functions
 #'
 #' @noRd
+
 mod_plot_frequency_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+
+    output$abundance <- renderPlot({
+      if(input$peptide == ""){
+        NULL
+      } else{
+        input$peptide |>
+          centdog::plot_aa_frequency() +
+          ggplot2::theme(legend.position = "none")
+      }
+    })
 
   })
 }
