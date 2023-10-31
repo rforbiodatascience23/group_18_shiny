@@ -9,14 +9,11 @@
 #' @importFrom shiny NS tagList
 mod_random_sequence_ui <- function(id){
   ns <- NS(id)
-  tagList(sidebarLayout(
-    sidebarPanel(
-      "Random Sequence"
-    ),
-    mainPanel(
-      "Plot Frequency"
-    )
-  )
+  tagList(fluidRow(
+    column(8, "DNA_sequence"),
+    column(4, "random_dna_length", "generate_dna_button")
+  ),
+  "peptide_sequence"
 
   )
 }
