@@ -1,17 +1,32 @@
 Package: cdmb
-Title: An Amazing Shiny App
+Title: PKG_TITLE
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "firstname",
-           family = "lastname",
-           role = c("aut", "cre"),
-           email = "your@email.com")
-Description: What the package does (one paragraph).
-License: What license is it under?
+Authors@R: c(person(given = "Laia",
+           family = "Devesa Carretero",
+           role = c("cre", "aut"), # There must be a "cre", but there can only be one
+           email = "s222800@dtu.dk"), 
+    person(given = "Eirini",
+           family = "Giannakopoulou",
+           role = "aut",
+           email = "s230204@dtu.dk"),
+    person(given = "Minke",
+           family = "Oostermeijer",
+           role = "aut",
+           email = "s222854@dtu.dk"),
+    person(given = "Cátia",
+           family = "Baptista",
+           role = "aut",
+           email = "s213049@dtu.dk"),
+     person(given = "Nova",
+           family = "Forbes",
+           role = "aut",
+           email = "s222373@dtu.dk"))
+Description: PKG_DESC.
+License: MIT + file LICENSE
 Imports: 
     config (>= 0.3.1),
     golem (>= 0.4.1),
     shiny (>= 1.7.5)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.3

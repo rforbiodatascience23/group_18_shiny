@@ -12,7 +12,7 @@
 ########################################
 
 ## Fill the DESCRIPTION ----
-## Add meta data about your application
+##
 ##
 ## /!\ Note: if you want to change the name of your app during development,
 ## either re-run this function, call golem::set_golem_name(), or don't forget
@@ -33,13 +33,14 @@ golem::fill_desc(
 golem::set_golem_options()
 
 ## Install the required dev dependencies ----
-golem::install_dev_deps()
+#golem::install_dev_deps()
 
 ## Create Common Files ----
 ## See ?usethis for more information
 usethis::use_mit_license("Golem User") # You can set another license here
 usethis::use_readme_rmd(open = FALSE)
 devtools::build_readme()
+
 # Note that `contact` is required since usethis version 2.1.5
 # If your {usethis} version is older, you can remove that param
 usethis::use_code_of_conduct(contact = "Golem User")
