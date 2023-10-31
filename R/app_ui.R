@@ -12,10 +12,11 @@ app_ui <- function(request) {
     fluidPage(
       h1("cdmb"),
       tabsetPanel(
-        tabPanel(title = "panel1",
-                 "random_sequence"),
-        tabPanel(title = "panel2",
-                 "plot_frequency")
+        tabPanel(title = "Random Sequence",
+                 mod_random_sequence_ui("random_sequence_1")
+                 ),
+        tabPanel(title = "Plot Frequency",
+                 mod_plot_frequency_ui("plot_frequency_1"))
       )
     )
   )
