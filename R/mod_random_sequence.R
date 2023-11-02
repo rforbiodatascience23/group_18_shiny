@@ -50,7 +50,7 @@ mod_random_sequence_server <- function(id){
     })
     observeEvent(input$generate_dna, {
       dna(
-        cdmb::generate_sequence(input$dna_length)
+        centdog::generated_sequence(input$dna_length)
       )
     })
     output$peptide <- renderText({
@@ -62,9 +62,9 @@ mod_random_sequence_server <- function(id){
       } else{
         input$DNA |>
           toupper() |>
-          yourpackage::function_two() |>
-          yourpackage::function_three() |>
-          yourpackage::function_four()
+          centdog::transcription() |>
+          centdog::aa_codon_translation() |>
+          centdog::translation()
       }
     })
   })
