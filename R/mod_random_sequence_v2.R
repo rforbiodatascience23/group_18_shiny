@@ -23,12 +23,19 @@ mod_random_sequence_ui <- function(id) {
              ),
              shiny::actionButton(
                inputId = ns("generate_dna"),
-               label = "Generate random DNA", style = "margin-top: 18px;"
-             ))
+               label = "Generate random DNA",
+               style = "margin-top: 18px;"
+             ),
+             shiny::actionButton(
+               inputId = ns("translate_dna"),
+               label = "Translate",
+               style = "margin-top: 18px;"
+             )
+      )
     ),
-    shiny::verbatimTextOutput(outputId = ns("peptide")) |>
-      shiny::tagAppendAttributes(style = "white-space: pre-wrap;")
-
+    fluidRow(
+      column(8, shiny::uiOutput(ns("translate_dna")))
+    )
   )
 }
 
@@ -44,7 +51,7 @@ mod_random_sequence_server <- function(id) {
         inputId = ns("DNA"),
         label = "DNA sequence",
         placeholder = "Insert DNA sequence",
-        value = "",  # Initialize with an empty string
+        value1 = "",  # Initialize with an empty string
         height = 100,
         width = 600
       )
@@ -55,22 +62,36 @@ mod_random_sequence_server <- function(id) {
       updateTextAreaInput(
         session,
         "DNA",
-        value = dna_sequence
+        value1 = dna_sequence
       )
     })
 
-    output$peptide <- renderText({
-      # Ensure input is not NULL and is longer than 2 characters
-      if (is.null(input$DNA)) {
-        NULL
-      } else if (nchar(input$DNA) < 3) {
-        NULL
-      } else {
-          input$DNA |>
+    output$translate_dna <- renderUI({
+      textAreaInput(
+        inputId = ns("translate_dna"),
+        label = "Translation",
+        placeholder = "Press Translate after generating the sequence",
+        value2 = "",  # Initialize with an empty string
+        height = 100,
+        width = 600
+      )
+    })
+
+    observeEvent(input$translate_dna, {
+      dna_sequence <- isolate(input$DNA)
+      if (!is.null(dna_sequence) && nchar(dna_sequence) >= 3) {
+        translated_sequence <- dna_sequence |>
           toupper() |>
           centralDogma::transcribe() |>
           centralDogma::codon_split() |>
           centralDogma::translate()
+
+        # Update the "translate_dna" textAreaInput with the translated sequence
+        updateTextAreaInput(
+          session,
+          "translate_dna",
+          value2 = translated_sequence
+        )
       }
     })
   })
