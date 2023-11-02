@@ -2,40 +2,48 @@
 #'
 #' @description A shiny Module.
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id, input, output, session Internal parameters for {shiny}.
 #'
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_random_sequence_ui <- function(id){
+mod_random_sequence_ui <- function(id) {
   ns <- NS(id)
   tagList(
     fluidRow(
       column(8, shiny::uiOutput(ns("DNA"))),
-      column(4, shiny::numericInput(
-        inputId = ns("dna_length"),
-        value = 6000,
-        min = 3,
-        max = 100000,
-        step = 3,
-        label = "Random DNA length"
-      ),
-      shiny::actionButton(
-        inputId = ns("generate_dna"),
-        label = "Generate random DNA", style = "margin-top: 18px;"
-      ))
+      column(4,
+             shiny::numericInput(
+               inputId = ns("dna_length"),
+               value = 6000,
+               min = 3,
+               max = 100000,
+               step = 3,
+               label = "Random DNA length"
+             ),
+             shiny::actionButton(
+               inputId = ns("generate_dna"),
+               label = "Generate random DNA",
+               style = "margin-top: 18px;"
+             ),
+             shiny::actionButton(
+               inputId = ns("translate_dna"),
+               label = "Translate",
+               style = "margin-top: 18px;"
+             )
+      )
     ),
-    shiny::verbatimTextOutput(outputId = ns("peptide")) |>
-      shiny::tagAppendAttributes(style = "white-space: pre-wrap;")
-
+    fluidRow(
+      column(8, shiny::uiOutput(ns("translate_dna")))
+    )
   )
 }
 
 #' random_sequence Server Functions
 #'
 #' @noRd
-mod_random_sequence_server <- function(id){
-  moduleServer( id, function(input, output, session){
+mod_random_sequence_server <- function(id) {
+  moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     output$DNA <- renderUI({
@@ -43,35 +51,48 @@ mod_random_sequence_server <- function(id){
         inputId = ns("DNA"),
         label = "DNA sequence",
         placeholder = "Insert DNA sequence",
-        value = dna(),
+        value1 = "",  # Initialize with an empty string
         height = 100,
         width = 600
       )
     })
+
     observeEvent(input$generate_dna, {
-      dna(
-        centdog::generated_sequence(input$dna_length)
+      dna_sequence <- centralDogma::random_dna(input$dna_length)
+      updateTextAreaInput(
+        session,
+        "DNA",
+        value1 = dna_sequence
       )
     })
-    output$peptide <- renderText({
-      # Ensure input is not NULL and is longer than 2 characters
-      if(is.null(input$DNA)){
-        NULL
-      } else if(nchar(input$DNA) < 3){
-        NULL
-      } else{
-        input$DNA |>
+
+    output$translate_dna <- renderUI({
+      textAreaInput(
+        inputId = ns("translate_dna"),
+        label = "Translation",
+        placeholder = "Press Translate after generating the sequence",
+        value2 = "",  # Initialize with an empty string
+        height = 100,
+        width = 600
+      )
+    })
+
+    observeEvent(input$translate_dna, {
+      dna_sequence <- isolate(input$DNA)
+      if (!is.null(dna_sequence) && nchar(dna_sequence) >= 3) {
+        translated_sequence <- dna_sequence |>
           toupper() |>
-          centdog::transcription() |>
-          centdog::aa_codon_translation() |>
-          centdog::translation()
+          centralDogma::transcribe() |>
+          centralDogma::codon_split() |>
+          centralDogma::translate()
+
+        # Update the "translate_dna" textAreaInput with the translated sequence
+        updateTextAreaInput(
+          session,
+          "translate_dna",
+          value2 = translated_sequence
+        )
       }
     })
   })
 }
-
-## To be copied in the UI
-# mod_random_sequence_ui("random_sequence_1")
-
-## To be copied in the server
-# mod_random_sequence_server("random_sequence_1")

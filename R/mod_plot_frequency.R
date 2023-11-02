@@ -43,7 +43,7 @@ mod_plot_frequency_server <- function(id){
         NULL
       } else{
         input$peptide |>
-          centdog::plot_aa_frequency() +
+          centralDogma::plot_abundance() +
           ggplot2::theme(legend.position = "none")
       }
     })
