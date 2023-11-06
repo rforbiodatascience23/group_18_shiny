@@ -68,9 +68,9 @@ mod_random_sequence_server <- function(id) {
       } else {
           input$DNA |>
           toupper() |>
-          centralDogma::transcribe() |>
-          centralDogma::codon_split() |>
-          centralDogma::translate()
+          centdog::transcription() |>
+          centdog::aa_codon_translation() |>
+          centdog::translation()
       }
     })
   })
