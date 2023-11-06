@@ -7,6 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @import centdog
 mod_random_sequence_ui <- function(id) {
   ns <- NS(id)
   tagList(
