@@ -51,7 +51,7 @@ mod_random_sequence_server <- function(id) {
     })
 
     observeEvent(input$generate_dna, {
-      dna_sequence <- centralDogma::random_dna(input$dna_length)
+      dna_sequence <- centdog::generated_sequence(input$dna_length)
       updateTextAreaInput(
         session,
         "DNA",
