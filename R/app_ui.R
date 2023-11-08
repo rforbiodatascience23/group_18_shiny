@@ -10,7 +10,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("cdmb"),
+      h1("cmdb - Central Dogma of Molecular Biology"),
       tabsetPanel(
         tabPanel(title = "Random Sequence",
                  mod_random_sequence_ui("random_sequence_1")
